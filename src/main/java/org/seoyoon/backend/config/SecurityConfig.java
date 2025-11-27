@@ -36,7 +36,11 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests((authorize) ->
                 authorize
-                        .requestMatchers("/auth/login",  "/adminUser","/stores" ).permitAll()
+                        .requestMatchers(
+                                "/auth/login", "/api/auth/login",
+                                "/auth/signup", "/api/auth/signup",
+                                "/adminUser", "/stores"
+                        ).permitAll()
                         .requestMatchers(HttpMethod.POST, "/itemsImage/**").authenticated()
                         .anyRequest().authenticated()
 //                authorize.requestMatchers("/**").permitAll()
