@@ -12,6 +12,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -22,6 +27,27 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+
+        // 여기에 "진짜 프론트 Origin" 들을 넣어줘야 함
+        config.setAllowedOriginPatterns(List.of(
+                "http://localhost:3000",        // 로컬 개발
+                "https://potato-admin.shop",    // 배포된 프론트 (https)
+                "http://potato-admin.shop",     // 혹시 http 접근
+                "http://43.202.145.45:3000",    // IP:3000 에서 직접 띄우는 경우
+                "https://43.202.145.45:3000"    // 필요하면 같이
+        ));
+
+        config.setAllowedMethods(List.of("GET", "POST", "PATCH", "DELETE"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);   // Authorization 헤더/쿠키 쓰면 true
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
 //filterChain => 모든 유저의 요청과 서버의 응답 사이에 자동으로 실행해주고 싶은 코드 담는 곳
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
