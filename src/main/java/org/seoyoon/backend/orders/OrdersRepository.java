@@ -21,7 +21,7 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
             "AND YEAR(o.createdAt) = YEAR(CURRENT_DATE)")
     Long getMonthlySales(@Param("storeId") Long storeId);
 
-    @Query("SELECT COUNT(u) FROM User u WHERE u.storeId = :storeId")
+    @Query("SELECT COUNT(o) FROM Orders o WHERE o.storeId = :storeId")
     Long countByStore(@Param("storeId") Long storeId);
 
     @Query("SELECT COUNT(o) FROM Orders o " +
