@@ -33,7 +33,7 @@ public class AuthController {
         Optional<AdminUser> userOptional = adminUserRepository.findByLogInId(logInId);
         if (userOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
-                    new ApiResponse<>(false, null,"존재하지 않는 유저입니다.", 403)
+                    new ApiResponse<>(false, null,"존재하지 않는 유저입니다.", 401)
             );
         }
 
@@ -41,7 +41,7 @@ public class AuthController {
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
-                    new ApiResponse<>(false, null, "비밀번호가 일치하지 않습니다.", 403)
+                    new ApiResponse<>(false, null, "비밀번호가 일치하지 않습니다.", 401)
             );
         }
 
