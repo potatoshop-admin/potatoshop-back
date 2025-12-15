@@ -16,7 +16,6 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
 
     @Query("SELECT COALESCE(SUM(o.totalPrice), 0) FROM Orders o " +
             "WHERE o.storeId = :storeId " +
-            "AND o.orderStatus = org.seoyoon.backend.orders.OrderStatusType.DELIVERED " +
             "AND MONTH(o.createdAt) = MONTH(CURRENT_DATE) " +
             "AND YEAR(o.createdAt) = YEAR(CURRENT_DATE)")
     Long getMonthlySales(@Param("storeId") Long storeId);
