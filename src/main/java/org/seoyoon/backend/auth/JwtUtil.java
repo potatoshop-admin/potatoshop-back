@@ -3,17 +3,17 @@ package org.seoyoon.backend.auth;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.seoyoon.backend.admin_user.RoleType;
 import org.springframework.stereotype.Component;
-
 import java.util.Date;
-
 
 @Component
 public class JwtUtil {
-    private final String SECRET_KEY = "seoyoonSecretKey0608-I-need-long-password-12345"; // application.properties 로 뺄 수 있음
-    private final long EXPIRATION_TIME =  24 * 1000 * 60 * 60; // 24시간
-//    private final long EXPIRATION_TIME =   1000 * 60 * 1; // 1분
+    @Value("${jwt.secret.key}")
+    private String SECRET_KEY;
+    @Value("${jwt.secret.expiration-time}")
+    private long EXPIRATION_TIME;
     public static final String BEARER_PREFIX = "Bearer ";
 
     public String generateToken(String username, Long storeId, String name, RoleType role) {
@@ -38,7 +38,6 @@ public class JwtUtil {
     }
 
     public boolean validateToken(String token, String username) {
-        System.out.println("extract username from token"+ extractUsername(token));
         return username.equals(extractUsername(token)) &&
                 !isTokenExpired(token);
     }
