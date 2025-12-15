@@ -26,16 +26,15 @@ public class S3Service {
     @Value("${spring.cloud.aws.region.static}")
     private String region;
 
-    @Value("${spring.cloud.aws.credentials.access-key}")
+    @Value("${spring.cloud.aws.credentials.accessKey}")
     private String accessKey;
 
-    @Value("${spring.cloud.aws.credentials.secret-key}")
+    @Value("${spring.cloud.aws.credentials.secretKey}")
     private String secretKey;
 
     private final S3Presigner s3Presigner;
 
     public String createPresignedUrl(MultipartFile file) throws IOException {
-//        System.out.println("file: " + file.getOriginalFilename());
         String uniqueFilename = "test/"+ UUID.randomUUID() + file.getOriginalFilename();
 
         var putObjectRequest = PutObjectRequest.builder()
@@ -47,7 +46,6 @@ public class S3Service {
                 .signatureDuration(Duration.ofMinutes(10))
                 .putObjectRequest(putObjectRequest)
                 .build();
-//        System.out.println("preSignRequest: " + file.getOriginalFilename());
         return s3Presigner.presignPutObject(preSignRequest).url().toString();
     }
 
