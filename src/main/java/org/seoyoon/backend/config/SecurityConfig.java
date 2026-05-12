@@ -33,11 +33,10 @@ public class SecurityConfig {
 
         // 여기에 "진짜 프론트 Origin" 들을 넣어줘야 함
         config.setAllowedOriginPatterns(List.of(
-                "http://localhost:3000",        // 로컬 개발
-                "https://potato-admin.shop",    // 배포된 프론트 (https)
-                "http://potato-admin.shop",     // 혹시 http 접근
-                "http://43.202.145.45:3000",    // IP:3000 에서 직접 띄우는 경우
-                "https://43.202.145.45:3000"    // 필요하면 같이
+                "http://localhost:3000",
+                "http://127.0.0.1:3000",
+                "https://potato-admin.shop",
+                "http://potato-admin.shop"
         ));
 
         config.setAllowedMethods(List.of("GET", "POST", "PATCH", "DELETE"));

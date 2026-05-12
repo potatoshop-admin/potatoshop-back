@@ -38,7 +38,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = authHeader.substring(7);
         String username = jwtUtil.extractUsername(token);
         Long storeId = jwtUtil.extractStoreId(token);
-        System.out.println("storeeeeee"+ storeId);
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             var userOptional = adminUserRepository.findByLogInId(username);

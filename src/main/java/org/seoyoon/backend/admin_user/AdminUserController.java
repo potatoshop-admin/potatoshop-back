@@ -37,13 +37,13 @@ public class AdminUserController {
             if (adminUserRepository.findByLogInId(lodInId).isPresent()){
                 return ResponseEntity.status(409).body(new ApiResponse<>(false, null, "이미 사용하는 아이디 입니다.", 409));
             }
-            if (adminUser.getName() == ""){
+            if (adminUser.getName() == null || adminUser.getName().isEmpty()){
                 return ResponseEntity.status(404).body(new ApiResponse<>(false, null, "이름은 필수입니다.", 404));
             }
-            if (adminUser.getLogInId() == ""){
+            if (adminUser.getLogInId() == null || adminUser.getLogInId().isEmpty()){
                 return ResponseEntity.status(404).body(new ApiResponse<>(false, null, "아이디는 필수입니다.", 404));
             }
-            if (adminUser.getPassword() == ""){
+            if (adminUser.getPassword() == null || adminUser.getPassword().isEmpty()){
                 return ResponseEntity.status(404).body(new ApiResponse<>(false, null, "비밀번호는 필수입니다.", 404));
             }
             newAdminUser.setLogInId(adminUser.getLogInId());
