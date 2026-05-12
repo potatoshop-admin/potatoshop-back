@@ -1,6 +1,7 @@
 package org.seoyoon.backend.admin_user;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,7 @@ public class AdminUser {
     private Long storeId;
     private String name;
     private String logInId;
+    @JsonIgnore
     private String password;
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
